@@ -35,6 +35,9 @@ app.all('/webapps*', function(req, res) {
 app.all('/webfile*', function(req, res) {
   proxy.web(req, res);
 });
+app.all('/reports/CamImage*', function(req, res) {
+  proxy.web(req, res);
+})
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

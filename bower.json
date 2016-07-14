@@ -1,0 +1,14 @@
+{
+  "name": "remotevideo",
+  "description": "",
+  "main": "",
+  "authors": [
+    "nobody"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "requirejs-babel": "0.0.9",
+    "require-less": "0.1.5"
+  }
+}
