@@ -11,24 +11,55 @@
 
 <body>
   <livecamera v-bind:camera-source="cameraSource"></livecamera>
-  <ordertree></ordertree>
+  <!-- <ordertree></ordertree> -->
 </body>
 
 <script src="/webapps/commons/libs/require.js"></script>
-<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript"
+  src="main.js"></script>
 
 <script>
-  // for testing
-  // var cameraSource = {"name":"SonyRobot","width":640,"height":480,"msPerFrame":250,"msPerLiveFrame":250,"pointingStationName":"Hades","orderTreeRefreshRate":1,"_store":{"storeName":"Kitzka POS","features":[{"name":"Schedule","canEdit":true,"canReceiveNotifications":true},{"name":"Request Time Off","canEdit":true,"canReceiveNotifications":true},{"name":"Support","canEdit":false,"canReceiveNotifications":true},{"name":"Remote Video","canEdit":true,"canReceiveNotifications":true},{"name":"Message Center","canEdit":true,"canReceiveNotifications":true},{"name":"Vendor Contacts","canEdit":true,"canReceiveNotifications":true},{"name":"Employee Contacts","canEdit":true,"canReceiveNotifications":true}],"timeOffTypes":["holiday","sick","time off","unavailable","vacation"],"employeeDisplayName":"Angela","employeeName":"166","employeeEmail":"niko.kitzka+1@foodtecsolutions.com","startOfWeek":2,"version":"9.3.10","isDebugMode":false,"isTestDeployment":true,"authid":"MTY2OjE0NjY0OTMzNTYwMDA6ZjY4QUs=","server":"http://172.23.1.64:9090/"}};
-  // handleCameraSource(cameraSource);
+
+  require(['jquery'], function(jquery) {
+    window.jQuery = jquery;
+    require(['parsequery'], function() {
+      var params = jquery.parseQuery();
+      var cameraname = params.cameraname;
+      var authid = params.authid;
+
+      if (cameraname) {
+        jquery.ajax({
+            url: '/ws/integrated/v1/store/cameras',
+            method: 'GET',
+            headers: {
+              'X-STORE-EMP-TOKEN': authid
+            },
+            data: {
+              name: cameraname
+            }
+          })
+          .then(function(cameraSource){
+            cameraSource.store = {
+              authid: authid
+            };
+            handleCameraSource(cameraSource);
+          })
+          .fail(handleError);
+      }
+    });
+  });
 
   // call this to init-app
-  function handleCameraSource(cameraSource){
-    require(['es6!app'], function(app){
+  function handleCameraSource(cameraSource) {
+    require(['es6!app'], function(app) {
       app.init(cameraSource);
     });
   }
 
+  function handleError(err) {
+    console.log(err);
+    console.log(err.stack);
+  }
 </script>
 
 </html>
