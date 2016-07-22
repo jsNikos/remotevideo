@@ -7,11 +7,11 @@ export default {
               <img id="camera" />
             </div>`,
   ready(){
-    let livecamera = new LiveCamera();
-    livecamera.computeImageSize(this);
-    livecamera.layoutContainer(this);
-    livecamera.scrollToCenter(this);
-    livecamera.startReloadImage(this);
+    (new LiveCamera())
+      .computeImageSize(this)
+      .layoutContainer(this)
+      .scrollToCenter(this)
+      .startReloadImage(this);
   }
 };
 
@@ -34,6 +34,7 @@ class LiveCamera {
     if(scrolltop > scrollbuffer){
       jquery(window).scrollTop(scrolltop);
     }
+    return this;
   }
 
   // compute height, width for fullscreen
@@ -47,10 +48,19 @@ class LiveCamera {
       this.imageHeight = windowHeight;
       this.imageWidth = comp.cameraSource.width * stretch;
     }
+
+    let windowWidth = window.innerWidth;
+    if(windowWidth > comp.cameraSource.width){
+      let stretch = windowWidth / comp.cameraSource.width;
+      this.imageWidth = windowWidth;
+      this.imageHeight = comp.cameraSource.height * stretch;
+    }
+    return this;
   }
 
   startReloadImage(comp){
     cameraService.startReloadTask(this.$image.get(0), comp.cameraSource);
+    return this;
   }
 
   layoutContainer(comp){
@@ -63,5 +73,7 @@ class LiveCamera {
       height: this.imageHeight,
       width: this.imageWidth
     });
+    return this;
   }
+
 }

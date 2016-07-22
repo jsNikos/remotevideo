@@ -6,12 +6,11 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1">
   <title>Remote Video</title>
-
 </head>
 
 <body>
   <livecamera v-bind:camera-source="cameraSource"></livecamera>
-  <!-- <ordertree></ordertree> -->
+  <ordertree v-bind:camera-source="cameraSource"></ordertree>
 </body>
 
 <script src="/webapps/commons/libs/require.js"></script>
@@ -19,6 +18,17 @@
   src="main.js"></script>
 
 <script>
+  // call this to init-app
+  function handleCameraSource(cameraSource) {
+    require(['es6!app'], function(app) {
+      app.init(cameraSource);
+    });
+  }
+
+  function handleError(err) {
+    console.log(err);
+    console.log(err.stack);
+  }
 
   require(['jquery'], function(jquery) {
     window.jQuery = jquery;
@@ -38,7 +48,7 @@
               name: cameraname
             }
           })
-          .then(function(cameraSource){
+          .then(function(cameraSource) {
             cameraSource.store = {
               authid: authid
             };
@@ -48,18 +58,6 @@
       }
     });
   });
-
-  // call this to init-app
-  function handleCameraSource(cameraSource) {
-    require(['es6!app'], function(app) {
-      app.init(cameraSource);
-    });
-  }
-
-  function handleError(err) {
-    console.log(err);
-    console.log(err.stack);
-  }
 </script>
 
 </html>
