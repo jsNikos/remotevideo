@@ -1,28 +1,31 @@
 import jquery from 'jquery';
 import ordertreeService from 'es6!services/ordertreeService';
+import template from 'text!components/ordertree.html';
 
 export default {
   props: ['cameraSource'],
-  template: '<div class="ordertree-container"></div>',
+  template: template,
   ready() {
     (new OrderTree())
       .startReloadOrdertree(this);
+  },
+  data() {
+    return {
+      ordertreehtml: undefined
+    };
   }
 };
 
 class OrderTree {
-  constructor() {
-    this.$ordertreeContainer = jquery('.ordertree-container');
-  }
 
   startReloadOrdertree(comp){
-    ordertreeService.startReloadTask(comp.cameraSource, this.processOrdertree.bind(this));
+    ordertreeService.startReloadTask(comp.cameraSource, this.processOrdertree.bind(comp));
   }
 
   processOrdertree(ordertree){
     return new Promise(resolve => {
       let html = ordertree && ordertree.orderTree || '';
-      this.$ordertreeContainer.html(html);
+      this.$data.ordertreehtml = html;
       resolve();
     });
   }

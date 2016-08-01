@@ -5,7 +5,8 @@ require.config({
 		es6: 'libs/requirejs-babel/es6',
     babel: 'libs/requirejs-babel/babel-5.8.34.min',
     jquery: '/webapps/commons/libs/jquery',
-    parsequery: '/webapps/commons/libs/jquery.parsequery'
+    parsequery: '/webapps/commons/libs/jquery.parsequery',
+    text: '/webapps/commons/libs/text'
   },
   map: {
   '*': {
