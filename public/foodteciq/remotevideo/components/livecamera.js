@@ -16,6 +16,7 @@ export default {
 };
 
 class LiveCamera {
+  
   constructor(){
     this.$cameraContainer = jquery('.camera-container');
     this.$image = this.$cameraContainer.find('#camera');

@@ -28,8 +28,7 @@ class OrdertreeService {
 
   findOrdertreeUrl(cameraSource) {
     let fetchid = Date.now();
-    let date = Math.floor(fetchid / 1000).toString(16).toUpperCase();
-    return `/reports/CameraOrderTree?date=${date}&station=${cameraSource.pointingStationName}&uniq=${fetchid}&storeEmpToken=${cameraSource.store.authid}`;
+    return `/reports/CameraOrderTree?station=${cameraSource.pointingStationName}&uniq=${fetchid}&storeEmpToken=${cameraSource.store.authid}`;
   }
 
   ensureRate(cameraSource, lastFetched) {

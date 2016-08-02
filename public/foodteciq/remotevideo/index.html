@@ -10,7 +10,8 @@
 
 <body>
   <livecamera v-bind:camera-source="cameraSource"></livecamera>
-  <ordertree v-bind:camera-source="cameraSource"></ordertree>
+  <ordertree v-bind:camera-source="cameraSource"
+    v-bind:is-android="isAndroid"></ordertree>
 </body>
 
 <script src="/webapps/commons/libs/require.js"></script>
@@ -19,9 +20,9 @@
 
 <script>
   // call this to init-app
-  function handleCameraSource(cameraSource) {
+  function handleCameraSource(cameraSource, isAndroid) {
     require(['es6!app'], function(app) {
-      app.init(cameraSource);
+      app.init(cameraSource, isAndroid);
     });
   }
 
